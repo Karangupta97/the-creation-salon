@@ -1,0 +1,22 @@
+{
+  "ipWhitelist": {
+    "enabled": true,
+    "allowedIPs": ["127.0.0.1", "103.50.23.37",
+      "::1"
+    ],
+    "description": "IP whitelist configuration for admin panel access. Set 'enabled' to true to activate IP filtering.",
+    "notes": [
+      "Add your IP addresses to the 'allowedIPs' array",
+      "Support for both IPv4 and IPv6 addresses",
+      "Use '*' to allow all IPs (not recommended for production)",
+      "CIDR notation support coming soon (e.g., '192.168.1.0/24')",
+      "Get your IP from: https://whatismyipaddress.com/"
+    ]
+  },
+  "examples": {
+    "singleIP": "203.0.113.45",
+    "multipleIPs": ["203.0.113.45", "198.51.100.23", "192.0.2.1"],
+    "localhost": ["127.0.0.1", "::1"],
+    "allowAll": ["*"]
+  }
+}

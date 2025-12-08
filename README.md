@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# The Creation Salon - Admin Authentication System
 
-## Getting Started
+Secure, production-ready Admin Login backend for Next.js App Router with comprehensive security features.
 
-First, run the development server:
+## 🚀 Quick Start
+
+**New to this project?** Complete installation guide:
+
+👉 **[docs/SETUP.md](./docs/SETUP.md)** - Complete Setup Guide (Database, API Keys, Installation)
+
+**Or if you're on Windows:**
+
+👉 **[docs/auth/WINDOWS_INSTALL.md](./docs/auth/WINDOWS_INSTALL.md)** - Windows-specific installation
+
+## 📚 Documentation
+
+All documentation is located in the **[`/docs`](./docs/)** folder:
+
+### Getting Started
+
+- **[docs/INDEX.md](./docs/INDEX.md)** - Documentation index and navigation
+- **[docs/auth/WINDOWS_INSTALL.md](./docs/auth/WINDOWS_INSTALL.md)** - Windows installation guide
+- **[docs/auth/SETUP_GUIDE.md](./docs/auth/SETUP_GUIDE.md)** - General setup instructions
+- **[docs/auth/README_IMPLEMENTATION.md](./docs/auth/README_IMPLEMENTATION.md)** - Implementation summary
+
+### Reference
+
+- **[docs/auth/AUTH_README.md](./docs/auth/AUTH_README.md)** - Complete API documentation
+- **[docs/auth/QUICK_REFERENCE.md](./docs/auth/QUICK_REFERENCE.md)** - Quick command reference
+- **[docs/auth/ARCHITECTURE.md](./docs/auth/ARCHITECTURE.md)** - System architecture
+
+### Production
+
+- **[docs/auth/PRODUCTION_CHECKLIST.md](./docs/auth/PRODUCTION_CHECKLIST.md)** - Pre-deployment checklist
+- **[docs/auth/PROJECT_SUMMARY.md](./docs/auth/PROJECT_SUMMARY.md)** - File structure & metrics
+
+## 🔑 Features
+
+- ✅ JWT authentication (access + refresh tokens)
+- ✅ bcrypt password hashing
+- ✅ HttpOnly, Secure cookies
+- ✅ Rate limiting with Upstash Redis
+- ✅ Account lockout protection
+- ✅ Comprehensive audit logging
+- ✅ Sentry error monitoring
+- ✅ Full test coverage
+- ✅ Production-ready
+
+## 📡 API Endpoints
+
+- `POST /api/admin/auth/login` - Login with credentials
+- `POST /api/admin/auth/refresh` - Refresh access token
+- `POST /api/admin/auth/logout` - Logout and revoke tokens
+
+## 🏃 Quick Commands
 
 ```bash
+# Install dependencies
+npm install
+
+# Setup database
+npm run prisma:generate
+npm run prisma:migrate
+
+# Seed admin user
+npm run seed
+
+# Start development
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Run tests
+npm test
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+The-creation-salon/
+├── docs/                       # 📚 All documentation
+├── app/api/admin/auth/         # 🔐 API routes
+├── lib/                        # 🛠️ Core libraries
+├── services/                   # 💼 Business logic
+├── prisma/                     # 🗄️ Database schema
+├── tests/                      # 🧪 Test files
+└── middleware.ts               # 🛡️ Route protection
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🔐 Default Credentials
 
-## Learn More
+```
+Email: admin@example.com
+Password: AdminPassword123!
+```
 
-To learn more about Next.js, take a look at the following resources:
+⚠️ **Change immediately after first login!**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🆘 Need Help?
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Installation issues? → [docs/auth/WINDOWS_INSTALL.md](./docs/auth/WINDOWS_INSTALL.md)
+- API questions? → [docs/auth/AUTH_README.md](./docs/auth/AUTH_README.md)
+- Quick commands? → [docs/auth/QUICK_REFERENCE.md](./docs/auth/QUICK_REFERENCE.md)
+- Full documentation? → [docs/INDEX.md](./docs/INDEX.md)
 
-## Deploy on Vercel
+## 📊 Stats
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Metric              | Value |
+| ------------------- | ----- |
+| Code Files          | 23    |
+| API Endpoints       | 3     |
+| Database Tables     | 3     |
+| Test Files          | 4     |
+| Documentation Pages | 9     |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛡️ Security
+
+- Password hashing with bcrypt
+- JWT tokens with rotation
+- Rate limiting & account lockout
+- CSRF & CORS protection
+- Comprehensive audit logs
+- Sentry monitoring
+
+## 📝 License
+
+MIT
+
+---
+
+**Built with**: Next.js • Prisma • PostgreSQL • JWT • bcrypt • Redis • Sentry

@@ -1,0 +1,99 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  passwordHash String
+  name      String
+  roles     String[] @default(["admin"])
+  isActive  Boolean  @default(true)
+  isLocked  Boolean  @default(false)
+  failedLoginAttempts Int @default(0)
+  lockedUntil DateTime?
+  lastLoginAt DateTime?
+  
+  // Two-Factor Authentication
+  twoFactorEnabled Boolean @default(false)
+  totpSecret       String?
+  totpBackupCodes  String[] @default([])
+  
+  // Password Reset
+  resetToken       String?
+  resetTokenExpiry DateTime?
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  refreshTokens RefreshToken[]
+  sessions      Session[]
+  auditLogs     AuthAuditLog[]
+
+  @@index([email])
+  @@index([resetToken])
+  @@map("admins")
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  jti       String   @unique // JWT ID for revocation
+  adminId   String
+  admin     Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  isRevoked Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([adminId])
+  @@index([token])
+  @@index([jti])
+  @@map("refresh_tokens")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  adminId      String
+  admin        Admin    @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  token        String   @unique // Session identifier
+  ipAddress    String
+  userAgent    String?
+  deviceInfo   String?  // Browser, OS info
+  lastActivity DateTime @default(now())
+  expiresAt    DateTime
+  isRevoked    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@index([adminId])
+  @@index([token])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+model AuthAuditLog {
+  id        String   @id @default(cuid())
+  adminId   String?
+  admin     Admin?   @relation(fields: [adminId], references: [id], onDelete: SetNull)
+  email     String
+  action    String   // LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT, ACCOUNT_LOCKED, TOKEN_REFRESH
+  ipAddress String
+  userAgent String?
+  reason    String?  // For failures and lockouts
+  metadata  Json?    // Additional context
+  createdAt DateTime @default(now())
+
+  @@index([adminId])
+  @@index([email])
+  @@index([action])
+  @@index([createdAt])
+  @@map("auth_audit_logs")
+}
