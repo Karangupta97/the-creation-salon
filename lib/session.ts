@@ -114,7 +114,10 @@ export async function updateSessionActivity(sessionToken: string) {
       data: { lastActivity: new Date() },
     });
   } catch (error) {
-    logger.error({ error, sessionToken: sessionToken.substring(0, 10) }, 'Failed to update session activity');
+    logger.error(
+      { error, sessionToken: sessionToken.substring(0, 10) },
+      'Failed to update session activity'
+    );
   }
 }
 

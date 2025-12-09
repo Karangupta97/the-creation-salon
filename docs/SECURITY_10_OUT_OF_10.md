@@ -11,22 +11,26 @@ Your admin panel now has enterprise-grade security with all recommended features
 ### 1. Email Integration ✅
 
 **Password Reset Emails**
+
 - Beautiful HTML email templates with security warnings
 - 1-hour token expiry clearly communicated
 - Automatic fallback to console logging in development
 - Prevents email enumeration attacks
 
 **2FA Notification Emails**
+
 - Sent when 2FA is enabled on an account
 - Includes device information
 - Security alert if unauthorized
 
 **Suspicious Login Alerts**
+
 - Triggered after 3 failed login attempts
 - Shows IP address, device, and timestamp
 - Actionable security recommendations
 
 **Setup:**
+
 ```bash
 # Add to .env
 RESEND_API_KEY=re_your_api_key_here
@@ -36,6 +40,7 @@ EMAIL_FROM=noreply@yourcreationsalon.com
 ```
 
 **Files:**
+
 - `lib/email.ts` - Email service with Resend integration
 - `app/api/admin/auth/forgot-password/route.ts` - Uses email service
 - `app/api/admin/auth/2fa/enable/route.ts` - Sends 2FA notification
@@ -46,24 +51,28 @@ EMAIL_FROM=noreply@yourcreationsalon.com
 ### 2. Advanced Monitoring ✅
 
 **Sentry Integration** (Already configured)
+
 - Error tracking in production
 - Performance monitoring
 - Failed login spike detection
 - Account lockout reporting
 
 **Audit Logging**
+
 - Complete authentication event tracking
 - IP address and user agent logging
 - Activity monitoring dashboard at `/admin/dashboard/activity`
 - Filterable by success/failure/security events
 
 **Setup:**
+
 ```bash
 # Add to .env
 NEXT_PUBLIC_SENTRY_DSN=https://your-sentry-dsn
 ```
 
 **Test Sentry:**
+
 ```bash
 npm run build
 # Triggers will appear in Sentry dashboard
@@ -76,6 +85,7 @@ npm run build
 **Automated Dependency Scanning**
 
 GitHub Dependabot configured:
+
 - Weekly security updates
 - Automatic PR creation
 - Groups minor/patch updates
@@ -84,16 +94,19 @@ GitHub Dependabot configured:
 **Continuous Security Scanning**
 
 GitHub Actions workflows:
+
 - NPM audit on every push/PR
 - CodeQL security analysis
 - Dependency review for PRs
 - Security header verification
 
 **Files Created:**
+
 - `.github/dependabot.yml` - Automated dependency updates
 - `.github/workflows/security-scan.yml` - CI/CD security checks
 
 **Manual Security Scan:**
+
 ```bash
 # Run npm audit
 npm audit
@@ -110,6 +123,7 @@ npm audit --audit-level=high
 ### 4. Database Backup Strategy ✅
 
 **Neon Built-in Features:**
+
 - Point-in-Time Recovery (7-30 days)
 - Branch-based backups
 - Instant cloning
@@ -132,6 +146,7 @@ npm audit --audit-level=high
    - Off-site sync
 
 **Setup Guide:**
+
 ```bash
 # Read comprehensive guide
 cat docs/BACKUP_STRATEGY.md
@@ -146,6 +161,7 @@ npx neonctl branches create --name backup-$(date +%Y%m%d)
 ```
 
 **Recovery Testing:**
+
 ```bash
 # Test backup monthly
 npm run backup
@@ -160,14 +176,15 @@ npm run verify-backup
 
 Different limits for different endpoint sensitivities:
 
-| Tier | Endpoints | Limit | Window |
-|------|-----------|-------|--------|
-| **Critical** | Login, Password Reset | 5 req | 15 min |
-| **Sensitive** | 2FA Setup, Sessions | 10 req | 15 min |
-| **Standard** | Dashboard, Data Fetch | 60 req | 1 min |
-| **Public** | Health Checks | 100 req | 1 min |
+| Tier          | Endpoints             | Limit   | Window |
+| ------------- | --------------------- | ------- | ------ |
+| **Critical**  | Login, Password Reset | 5 req   | 15 min |
+| **Sensitive** | 2FA Setup, Sessions   | 10 req  | 15 min |
+| **Standard**  | Dashboard, Data Fetch | 60 req  | 1 min  |
+| **Public**    | Health Checks         | 100 req | 1 min  |
 
 **Features:**
+
 - Per-IP rate limiting
 - Per-account rate limiting (prevents credential stuffing)
 - Global circuit breaker (DDoS protection)
@@ -175,6 +192,7 @@ Different limits for different endpoint sensitivities:
 - Analytics tracking
 
 **Usage:**
+
 ```typescript
 import { applyRateLimit, checkMultipleLimits } from '@/lib/advanced-rate-limit';
 
@@ -186,6 +204,7 @@ const { allowed, reason } = await checkMultipleLimits(ipAddress, accountId);
 ```
 
 **Files:**
+
 - `lib/advanced-rate-limit.ts` - Tiered rate limiting system
 
 ---
@@ -193,6 +212,7 @@ const { allowed, reason } = await checkMultipleLimits(ipAddress, accountId);
 ## 📊 Security Comparison
 
 ### Before (7/10)
+
 - ✅ JWT authentication
 - ✅ Basic rate limiting
 - ✅ IP whitelisting
@@ -203,6 +223,7 @@ const { allowed, reason } = await checkMultipleLimits(ipAddress, accountId);
 - ❌ No security scanning
 
 ### After (10/10)
+
 - ✅ JWT authentication with rotation
 - ✅ Advanced tiered rate limiting
 - ✅ IP whitelisting
@@ -223,12 +244,14 @@ const { allowed, reason } = await checkMultipleLimits(ipAddress, accountId);
 ## 🚀 Quick Start
 
 ### 1. Install Dependencies (if needed)
+
 ```bash
 # All dependencies already in package.json
 npm install
 ```
 
 ### 2. Configure Environment Variables
+
 ```bash
 # Email (Production)
 RESEND_API_KEY=re_your_api_key
@@ -246,12 +269,14 @@ R2_ACCOUNT_ID=your-r2-account
 ```
 
 ### 3. Run Database Migration
+
 ```cmd
 npx prisma migrate dev --name init
 npx prisma generate
 ```
 
 ### 4. Start Application
+
 ```bash
 npm run dev
 ```
@@ -259,27 +284,32 @@ npm run dev
 ### 5. Test Security Features
 
 **Email Integration:**
+
 1. Visit `/admin/forgot-password`
 2. Enter your email
 3. Check console (dev) or inbox (production)
 
 **2FA Setup:**
+
 1. Login to `/admin/dashboard`
 2. Go to Settings tab
 3. Enable 2FA with authenticator app
 4. Check email for confirmation
 
 **Session Management:**
+
 1. Go to Sessions tab
 2. View all active sessions
 3. Test session revocation
 
 **Activity Monitoring:**
+
 1. Go to Activity tab
 2. Filter by success/failure/security
 3. View IP addresses and user agents
 
 **Rate Limiting:**
+
 1. Try logging in 6 times with wrong password
 2. Should see account lockout
 3. Wait 5 minutes or check email
@@ -291,18 +321,21 @@ npm run dev
 ### For Production Deployment
 
 1. **Enable HTTPS**
+
    ```bash
    # Automatic with Vercel/Netlify
    # Manual: Use Let's Encrypt or Cloudflare
    ```
 
 2. **Configure IP Whitelist**
+
    ```bash
    # In .env
    ADMIN_IP_WHITELIST=your.office.ip,your.home.ip
    ```
 
 3. **Set up Email Service**
+
    ```bash
    # Sign up for Resend: https://resend.com
    # Add domain and verify
@@ -310,6 +343,7 @@ npm run dev
    ```
 
 4. **Enable Sentry**
+
    ```bash
    # Sign up: https://sentry.io
    # Create project
@@ -317,6 +351,7 @@ npm run dev
    ```
 
 5. **Configure Backups**
+
    ```bash
    # Choose one:
    # - GitHub Actions (recommended)
@@ -325,6 +360,7 @@ npm run dev
    ```
 
 6. **Enable Security Scanning**
+
    ```bash
    # Push to GitHub
    # Enable Dependabot in repo settings
@@ -343,18 +379,21 @@ npm run dev
 ## 📈 Monitoring & Maintenance
 
 ### Weekly Tasks
+
 - [ ] Review audit logs for unusual activity
 - [ ] Check Sentry for new errors
 - [ ] Review active sessions
 - [ ] Verify backup completion
 
 ### Monthly Tasks
+
 - [ ] Test backup restore procedure
 - [ ] Review and update dependencies
 - [ ] Rotate JWT secrets (optional)
 - [ ] Security scan with `npm audit`
 
 ### Quarterly Tasks
+
 - [ ] Full disaster recovery drill
 - [ ] Review IP whitelist
 - [ ] Update security documentation
@@ -372,15 +411,17 @@ npm run dev
    - Review user agents
 
 2. **Add IP to Blocklist**
+
    ```bash
    # Remove from ADMIN_IP_WHITELIST in .env
    # Or block at firewall level
    ```
 
 3. **Force Password Reset**
+
    ```sql
    -- In database
-   UPDATE admins 
+   UPDATE admins
    SET "resetToken" = NULL, "resetTokenExpiry" = NULL
    WHERE email = 'compromised@email.com';
    ```

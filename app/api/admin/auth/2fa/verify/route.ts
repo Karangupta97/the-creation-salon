@@ -18,23 +18,20 @@ export async function POST(request: NextRequest) {
     const csrfTokenFromHeader = request.headers.get('x-csrf-token');
     const csrfTokenFromCookie = request.cookies.get('csrf_token')?.value;
 
-    if (!csrfTokenFromHeader || !csrfTokenFromCookie || 
-        !verifyCsrfToken(csrfTokenFromHeader, csrfTokenFromCookie)) {
+    if (
+      !csrfTokenFromHeader ||
+      !csrfTokenFromCookie ||
+      !verifyCsrfToken(csrfTokenFromHeader, csrfTokenFromCookie)
+    ) {
       logger.warn('CSRF token validation failed on 2FA verify');
-      return NextResponse.json(
-        { ok: false, error: 'Invalid CSRF token' },
-        { status: 403 }
-      );
+      return NextResponse.json({ ok: false, error: 'Invalid CSRF token' }, { status: 403 });
     }
 
     const body = await request.json();
     const { userId, token, isBackupCode } = body;
 
     if (!userId || !token) {
-      return NextResponse.json(
-        { ok: false, error: 'User ID and token required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ ok: false, error: 'User ID and token required' }, { status: 400 });
     }
 
     // Get admin user with 2FA details
@@ -43,10 +40,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!admin || !admin.twoFactorEnabled || !admin.totpSecret) {
-      return NextResponse.json(
-        { ok: false, error: 'Invalid request' },
-        { status: 400 }
-      );
+      return NextResponse.json({ ok: false, error: 'Invalid request' }, { status: 400 });
     }
 
     let isValid = false;
@@ -64,14 +58,14 @@ export async function POST(request: NextRequest) {
       for (const hashedCode of admin.totpBackupCodes) {
         if (await compare(token, hashedCode)) {
           isValid = true;
-          
+
           // Remove used backup code
-          const updatedCodes = admin.totpBackupCodes.filter(c => c !== hashedCode);
+          const updatedCodes = admin.totpBackupCodes.filter((c) => c !== hashedCode);
           await prisma.admin.update({
             where: { id: admin.id },
             data: { totpBackupCodes: updatedCodes },
           });
-          
+
           logger.info({ adminId: admin.id }, 'Backup code used for 2FA');
           break;
         }
@@ -83,10 +77,7 @@ export async function POST(request: NextRequest) {
 
     if (!isValid) {
       logger.warn({ adminId: admin.id, email: admin.email }, 'Invalid 2FA token');
-      return NextResponse.json(
-        { ok: false, error: 'Invalid token' },
-        { status: 400 }
-      );
+      return NextResponse.json({ ok: false, error: 'Invalid token' }, { status: 400 });
     }
 
     logger.info({ adminId: admin.id, email: admin.email }, '2FA verification successful');
@@ -112,7 +103,7 @@ export async function POST(request: NextRequest) {
     // Create session for tracking
     const ipAddress = getClientIp(request);
     const userAgent = getUserAgent(request);
-    
+
     await createSession({
       adminId: admin.id,
       ipAddress,
@@ -161,9 +152,6 @@ export async function POST(request: NextRequest) {
     return response;
   } catch (error) {
     logger.error({ error }, 'Error verifying 2FA');
-    return NextResponse.json(
-      { ok: false, error: 'Failed to verify 2FA' },
-      { status: 500 }
-    );
+    return NextResponse.json({ ok: false, error: 'Failed to verify 2FA' }, { status: 500 });
   }
 }

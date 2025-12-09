@@ -3,9 +3,11 @@
 ## ✅ Completed Security Improvements
 
 ### 1. ✅ Strong JWT Secret
+
 **Status**: Implemented
 
 **What was done:**
+
 - Generated cryptographically secure 64-byte JWT secret
 - Updated `.env` file with new secret: `JpRU193Ico8y+WBKh3logEgjCQq9dUoyzAUpVV/KdC3SqmXrXJKmRrBdlpUyhqllVGjxCb3s/trnV8KVaS+r1Q==`
 - Removed default fallback secret
@@ -15,9 +17,11 @@
 ---
 
 ### 2. ✅ HTTPS Enforcement
+
 **Status**: Implemented
 
 **What was done:**
+
 - Created `lib/security.ts` with `enforceHttps()` function
 - Added automatic HTTPS redirect in production
 - Integrated into middleware for all requests
@@ -26,6 +30,7 @@
 **Security Impact**: 🟢 High - Prevents man-in-the-middle attacks
 
 **Production Configuration:**
+
 ```typescript
 // Automatically redirects HTTP to HTTPS in production
 // HSTS header enforces HTTPS for 1 year
@@ -35,9 +40,11 @@
 ---
 
 ### 3. ✅ CSRF Token Protection
+
 **Status**: Implemented
 
 **What was done:**
+
 - Created CSRF token generation/verification in `lib/security.ts`
 - Added `/api/csrf` endpoint to generate tokens
 - Updated login API to validate CSRF tokens
@@ -47,12 +54,14 @@
 **Security Impact**: 🟢 Medium-High - Prevents cross-site request forgery
 
 **How it works:**
+
 1. Login page fetches CSRF token from `/api/csrf`
 2. Token stored in HttpOnly cookie + returned in response
 3. Frontend sends token in `X-CSRF-Token` header
 4. Server validates token matches cookie before processing
 
 **Usage Example:**
+
 ```typescript
 // Auto-fetched on login page
 useEffect(() => {
@@ -66,9 +75,11 @@ headers: { 'X-CSRF-Token': csrfToken }
 ---
 
 ### 4. ✅ IP Whitelist for Admin Access
+
 **Status**: Implemented
 
 **What was done:**
+
 - Added `ADMIN_IP_WHITELIST` environment variable
 - Created `isIpWhitelisted()` function in `lib/security.ts`
 - Integrated IP check in middleware for `/admin` and `/api/admin` routes
@@ -77,6 +88,7 @@ headers: { 'X-CSRF-Token': csrfToken }
 **Security Impact**: 🟢 High - Limits attack surface to known IPs
 
 **Configuration (.env):**
+
 ```env
 # Leave empty to allow all IPs (development only)
 ADMIN_IP_WHITELIST=
@@ -86,6 +98,7 @@ ADMIN_IP_WHITELIST=203.0.113.1,198.51.100.0/24,::1
 ```
 
 **How to get your IP:**
+
 - Visit https://whatismyipaddress.com/
 - Add your IP to `ADMIN_IP_WHITELIST` in `.env`
 - Restart the development server
@@ -93,9 +106,11 @@ ADMIN_IP_WHITELIST=203.0.113.1,198.51.100.0/24,::1
 ---
 
 ### 5. ✅ Two-Factor Authentication (2FA)
+
 **Status**: Implemented (requires Prisma migration)
 
 **What was done:**
+
 - Installed `otplib` and `qrcode` packages
 - Created `lib/totp.ts` for TOTP operations
 - Added database fields: `twoFactorEnabled`, `totpSecret`, `totpBackupCodes`
@@ -109,6 +124,7 @@ ADMIN_IP_WHITELIST=203.0.113.1,198.51.100.0/24,::1
 **Security Impact**: 🟢 Very High - Adds second layer of authentication
 
 **Setup Flow:**
+
 1. Admin logs into dashboard
 2. Goes to settings and clicks "Enable 2FA"
 3. Scans QR code with authenticator app (Google Authenticator, Authy, etc.)
@@ -117,6 +133,7 @@ ADMIN_IP_WHITELIST=203.0.113.1,198.51.100.0/24,::1
 6. 2FA is now enabled for future logins
 
 **Login Flow with 2FA:**
+
 1. Enter email + password
 2. If 2FA enabled, show 2FA code input
 3. Enter 6-digit code from authenticator app
@@ -145,6 +162,7 @@ All responses now include comprehensive security headers:
 ## 📋 Next Steps to Complete Setup
 
 ### 1. Run Database Migration
+
 ```bash
 # Stop your dev server first
 npx prisma migrate dev --name add_2fa_fields
@@ -157,12 +175,14 @@ npm run dev
 ```
 
 ### 2. Configure IP Whitelist (Production)
+
 ```env
 # Get your office/home IP and add to .env
 ADMIN_IP_WHITELIST=YOUR_IP_ADDRESS
 ```
 
 ### 3. Test 2FA Flow
+
 1. Login to admin dashboard
 2. Navigate to Settings (when you create the settings page)
 3. Enable 2FA
@@ -170,6 +190,7 @@ ADMIN_IP_WHITELIST=YOUR_IP_ADDRESS
 5. Test login with 2FA
 
 ### 4. Update Login Page for 2FA
+
 The login page needs to be updated to show a 2FA code input when `requires2FA: true` is returned from the login API.
 
 ---
@@ -194,6 +215,7 @@ The login page needs to be updated to show a 2FA code input when `requires2FA: t
 Before deploying to production:
 
 1. **Environment Variables**
+
    ```env
    NODE_ENV=production
    NEXT_PUBLIC_APP_URL=https://yourdomain.com
@@ -206,6 +228,7 @@ Before deploying to production:
    - Force HTTPS at load balancer/proxy level too
 
 3. **Database Migration**
+
    ```bash
    npx prisma migrate deploy
    ```
@@ -222,6 +245,7 @@ Before deploying to production:
 ## 📱 Recommended Authenticator Apps
 
 For 2FA, users can use any TOTP-compatible app:
+
 - Google Authenticator (iOS/Android)
 - Microsoft Authenticator (iOS/Android)
 - Authy (iOS/Android/Desktop)
@@ -236,6 +260,7 @@ For 2FA, users can use any TOTP-compatible app:
 **After**: 9.5/10
 
 **Remaining Recommendations:**
+
 - Session management improvements (auto-logout on password change)
 - Password complexity requirements UI
 - Regular security audits
@@ -246,24 +271,27 @@ For 2FA, users can use any TOTP-compatible app:
 ## 💡 Usage Examples
 
 ### Getting CSRF Token
+
 ```typescript
 const response = await fetch('/api/csrf');
 const { csrfToken } = await response.json();
 ```
 
 ### Making Protected Request
+
 ```typescript
 fetch('/api/admin/auth/login', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
-    'X-CSRF-Token': csrfToken
+    'X-CSRF-Token': csrfToken,
   },
-  body: JSON.stringify({ email, password })
+  body: JSON.stringify({ email, password }),
 });
 ```
 
 ### Checking IP Whitelist
+
 ```typescript
 import { isIpWhitelisted } from '@/lib/security';
 
@@ -277,6 +305,7 @@ if (!isIpWhitelisted(clientIp)) {
 ## 🆘 Troubleshooting
 
 ### Prisma Migration Failed
+
 ```bash
 # Reset migrations (development only!)
 npx prisma migrate reset
@@ -286,16 +315,19 @@ npx prisma migrate dev --name add_2fa_fields
 ```
 
 ### CSRF Token Mismatch
+
 - Clear cookies
 - Ensure CSRF endpoint is accessible
 - Check browser console for errors
 
 ### IP Blocked
+
 - Add your IP to `ADMIN_IP_WHITELIST`
 - Use `::1` for localhost IPv6
 - Use `127.0.0.1` for localhost IPv4
 
 ### 2FA Not Working
+
 - Ensure phone time is synced (TOTP requires accurate time)
 - Check backup codes are saved
 - Verify Prisma client is regenerated

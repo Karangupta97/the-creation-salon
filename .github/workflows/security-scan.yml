@@ -16,20 +16,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run npm audit
         run: npm audit --audit-level=moderate
         continue-on-error: true
-      
+
       - name: Run npm audit (production only)
         run: npm audit --production --audit-level=moderate
 
@@ -39,7 +39,7 @@ jobs:
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Dependency Review
         uses: actions/dependency-review-action@v4
         with:
@@ -59,20 +59,20 @@ jobs:
         language: ['javascript', 'typescript']
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           queries: security-extended,security-and-quality
-      
+
       - name: Autobuild
         uses: github/codeql-action/autobuild@v4
-      
+
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
         with:
-          category: "/language:${{matrix.language}}"
+          category: '/language:${{matrix.language}}'
 
   snyk-scan:
     name: Snyk Security Scan
@@ -83,16 +83,16 @@ jobs:
     if: github.event_name != 'pull_request' # Run on push and schedule only
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         continue-on-error: true
@@ -100,10 +100,10 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --sarif-file-output=snyk.sarif --severity-threshold=medium
-      
+
       - name: Upload Snyk results to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v4
-        if: always()
+        if: always() && hashFiles('snyk.sarif') != ''
         with:
           sarif_file: snyk.sarif
 
@@ -112,16 +112,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Build application
         run: npm run build
         env:
@@ -129,11 +129,11 @@ jobs:
           JWT_SECRET: test-secret-key-for-ci-only
           UPSTASH_REDIS_REST_URL: http://localhost
           UPSTASH_REDIS_REST_TOKEN: test
-      
+
       - name: Check security configuration
         run: |
-          echo "Checking middleware.ts for security headers..."
-          grep -q "X-Frame-Options" middleware.ts || exit 1
-          grep -q "X-Content-Type-Options" middleware.ts || exit 1
-          grep -q "Strict-Transport-Security" middleware.ts || exit 1
+          echo "Checking security headers configuration..."
+          grep -q "X-Frame-Options" lib/security.ts || exit 1
+          grep -q "X-Content-Type-Options" lib/security.ts || exit 1
+          grep -q "Strict-Transport-Security" lib/security.ts || exit 1
           echo "✓ Security headers configured"

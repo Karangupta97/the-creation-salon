@@ -7,6 +7,7 @@ This guide covers automated backup strategies for your Neon PostgreSQL database 
 ## Neon Built-in Features
 
 ### Point-in-Time Recovery (PITR)
+
 Neon provides automatic point-in-time recovery:
 
 - **Retention**: 7 days (Free tier) or 30 days (Paid plans)
@@ -14,6 +15,7 @@ Neon provides automatic point-in-time recovery:
 - **Location**: Neon Dashboard → Your Project → Restore
 
 ### Branch-based Backups
+
 Use Neon branches for safe testing and backups:
 
 ```bash
@@ -44,12 +46,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup PostgreSQL Client
         run: |
           sudo apt-get update
           sudo apt-get install -y postgresql-client
-      
+
       - name: Create Backup
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -57,14 +59,14 @@ jobs:
           BACKUP_FILE="backup-$(date +%Y%m%d-%H%M%S).sql"
           pg_dump "$DATABASE_URL" > "$BACKUP_FILE"
           gzip "$BACKUP_FILE"
-      
+
       - name: Upload to S3/R2
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      
+
       - name: Sync to S3
         run: |
           aws s3 cp backup-*.sql.gz s3://your-backup-bucket/database-backups/
@@ -77,6 +79,7 @@ jobs:
 ### 2. Cloudflare R2 Backups (Cost-effective)
 
 Install Wrangler:
+
 ```bash
 npm install -g wrangler
 wrangler login
@@ -104,10 +107,10 @@ const r2Client = new S3Client({
 async function backup() {
   const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
   const filename = `backup-${timestamp}.sql.gz`;
-  
+
   // Create backup
   await execAsync(`pg_dump "${process.env.DATABASE_URL}" | gzip > ${filename}`);
-  
+
   // Upload to R2
   const fileStream = createReadStream(filename);
   await r2Client.send(
@@ -117,9 +120,9 @@ async function backup() {
       Body: fileStream,
     })
   );
-  
+
   console.log(`✓ Backup uploaded: ${filename}`);
-  
+
   // Cleanup local file
   await execAsync(`rm ${filename}`);
 }
@@ -128,6 +131,7 @@ backup().catch(console.error);
 ```
 
 Add to `package.json`:
+
 ```json
 {
   "scripts": {
@@ -148,7 +152,7 @@ async function createBackupBranch() {
     {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${process.env.NEON_API_KEY}`,
+        Authorization: `Bearer ${process.env.NEON_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -158,7 +162,7 @@ async function createBackupBranch() {
       }),
     }
   );
-  
+
   const data = await response.json();
   console.log(`✓ Backup branch created: ${data.branch.name}`);
 }
@@ -227,7 +231,7 @@ jobs:
         run: |
           LATEST=$(aws s3 ls s3://your-bucket/database-backups/ | sort | tail -n 1 | awk '{print $1" "$2}')
           AGE=$(( ($(date +%s) - $(date -d "$LATEST" +%s)) / 3600 ))
-          
+
           if [ $AGE -gt 36 ]; then
             echo "⚠️ Latest backup is $AGE hours old!"
             # Send alert to Discord/Slack
@@ -236,7 +240,7 @@ jobs:
               -d "{\"content\":\"Database backup is $AGE hours old!\"}"
             exit 1
           fi
-          
+
           echo "✓ Backup is recent ($AGE hours old)"
 ```
 
@@ -269,16 +273,19 @@ jobs:
 ## Cost Optimization
 
 ### Neon (Free Tier)
+
 - ✓ 7-day PITR included
 - ✓ Unlimited branches
 - Limitation: 3 GB storage
 
 ### Cloudflare R2
+
 - ✓ No egress fees
 - ✓ $0.015/GB/month storage
 - ✓ 10GB free tier
 
 ### AWS S3
+
 - Standard: $0.023/GB/month
 - S3 Glacier: $0.004/GB/month (retrieval time: hours)
 - Use lifecycle policies to move old backups to Glacier

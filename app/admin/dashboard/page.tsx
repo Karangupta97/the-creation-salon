@@ -18,7 +18,7 @@ export default async function DashboardPage() {
   let payload;
   try {
     payload = await verifyAccessToken(accessToken);
-    
+
     // Verify admin role
     if (!payload.roles.includes('admin')) {
       redirect('/admin/login');

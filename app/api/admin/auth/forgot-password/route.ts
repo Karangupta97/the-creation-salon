@@ -70,9 +70,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     logger.error({ error }, 'Error processing forgot password request');
-    return NextResponse.json(
-      { ok: false, error: 'Failed to process request' },
-      { status: 500 }
-    );
+    return NextResponse.json({ ok: false, error: 'Failed to process request' }, { status: 500 });
   }
 }

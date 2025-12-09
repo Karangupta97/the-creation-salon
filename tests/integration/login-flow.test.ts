@@ -9,11 +9,11 @@ import prisma from '@/lib/prisma';
  * Integration test for complete login flow
  * Note: This requires a test database to be set up
  * Run with: npm test tests/integration/login-flow.test.ts
- * 
+ *
  * KNOWN ISSUE: The Neon adapter initializes the Pool before dotenv loads DATABASE_URL.
  * These tests are skipped until we refactor lib/prisma.ts to support lazy initialization
  * or use a standard Prisma client for tests.
- * 
+ *
  * Workaround: Set DATABASE_URL as an environment variable before running tests:
  * DATABASE_URL="your-connection-string" npm test
  */

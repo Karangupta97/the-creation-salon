@@ -14,10 +14,7 @@ export async function POST(request: NextRequest) {
     // Verify user is authenticated
     const accessToken = request.cookies.get('access_token')?.value;
     if (!accessToken) {
-      return NextResponse.json(
-        { ok: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
     }
 
     const payload = await verifyAccessToken(accessToken);
@@ -29,10 +26,7 @@ export async function POST(request: NextRequest) {
     });
 
     if (!admin) {
-      return NextResponse.json(
-        { ok: false, error: 'User not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ ok: false, error: 'User not found' }, { status: 404 });
     }
 
     // Generate TOTP secret
@@ -43,9 +37,7 @@ export async function POST(request: NextRequest) {
 
     // Generate backup codes
     const backupCodes = generateBackupCodes(8);
-    const hashedBackupCodes = await Promise.all(
-      backupCodes.map(code => hash(code, 10))
-    );
+    const hashedBackupCodes = await Promise.all(backupCodes.map((code) => hash(code, 10)));
 
     // Store the secret temporarily (not enabled until verified)
     await prisma.admin.update({
@@ -67,9 +59,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     logger.error({ error }, 'Error setting up 2FA');
-    return NextResponse.json(
-      { ok: false, error: 'Failed to setup 2FA' },
-      { status: 500 }
-    );
+    return NextResponse.json({ ok: false, error: 'Failed to setup 2FA' }, { status: 500 });
   }
 }

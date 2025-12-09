@@ -18,10 +18,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ ok: true, sessions });
   } catch (error) {
     logger.error({ error }, 'Error fetching sessions');
-    return NextResponse.json(
-      { ok: false, error: 'Failed to fetch sessions' },
-      { status: 500 }
-    );
+    return NextResponse.json({ ok: false, error: 'Failed to fetch sessions' }, { status: 500 });
   }
 }
 
@@ -43,28 +40,19 @@ export async function DELETE(request: NextRequest) {
     }
 
     if (!sessionId) {
-      return NextResponse.json(
-        { ok: false, error: 'Session ID required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ ok: false, error: 'Session ID required' }, { status: 400 });
     }
 
     // Revoke specific session
     const success = await revokeSession(sessionId, payload.sub);
 
     if (!success) {
-      return NextResponse.json(
-        { ok: false, error: 'Failed to revoke session' },
-        { status: 400 }
-      );
+      return NextResponse.json({ ok: false, error: 'Failed to revoke session' }, { status: 400 });
     }
 
     return NextResponse.json({ ok: true, message: 'Session revoked' });
   } catch (error) {
     logger.error({ error }, 'Error revoking session');
-    return NextResponse.json(
-      { ok: false, error: 'Failed to revoke session' },
-      { status: 500 }
-    );
+    return NextResponse.json({ ok: false, error: 'Failed to revoke session' }, { status: 500 });
   }
 }

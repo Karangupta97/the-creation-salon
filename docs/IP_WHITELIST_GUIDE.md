@@ -1,6 +1,7 @@
 # IP Whitelist Configuration Guide
 
 ## 📁 Location
+
 `config/ip-whitelist.json`
 
 ## 🔧 Configuration
@@ -12,15 +13,12 @@
    - Copy your IPv4 address (e.g., `203.0.113.45`)
 
 2. **Edit the Configuration File**
+
    ```json
    {
      "ipWhitelist": {
        "enabled": true,
-       "allowedIPs": [
-         "127.0.0.1",
-         "::1",
-         "YOUR_IP_ADDRESS_HERE"
-       ]
+       "allowedIPs": ["127.0.0.1", "::1", "YOUR_IP_ADDRESS_HERE"]
      }
    }
    ```
@@ -34,49 +32,40 @@
 ## 📝 Configuration Examples
 
 ### Development (Allow Localhost Only)
+
 ```json
 {
   "ipWhitelist": {
     "enabled": false,
-    "allowedIPs": [
-      "127.0.0.1",
-      "::1"
-    ]
+    "allowedIPs": ["127.0.0.1", "::1"]
   }
 }
 ```
 
 ### Single Office IP
+
 ```json
 {
   "ipWhitelist": {
     "enabled": true,
-    "allowedIPs": [
-      "127.0.0.1",
-      "::1",
-      "203.0.113.45"
-    ]
+    "allowedIPs": ["127.0.0.1", "::1", "203.0.113.45"]
   }
 }
 ```
 
 ### Multiple Office Locations
+
 ```json
 {
   "ipWhitelist": {
     "enabled": true,
-    "allowedIPs": [
-      "127.0.0.1",
-      "::1",
-      "203.0.113.45",
-      "198.51.100.23",
-      "192.0.2.1"
-    ]
+    "allowedIPs": ["127.0.0.1", "::1", "203.0.113.45", "198.51.100.23", "192.0.2.1"]
   }
 }
 ```
 
 ### Allow All (Not Recommended for Production)
+
 ```json
 {
   "ipWhitelist": {
@@ -87,6 +76,7 @@
 ```
 
 ### Disabled (Allow All)
+
 ```json
 {
   "ipWhitelist": {
@@ -105,6 +95,7 @@
 3. **Default**: If nothing is configured, all IPs are allowed
 
 ### Security Flow
+
 ```
 Request to /admin
     ↓
@@ -122,6 +113,7 @@ Check if client IP in allowedIPs
 ## 🌐 IP Address Types
 
 ### IPv4 (Most Common)
+
 ```
 203.0.113.45
 192.168.1.100
@@ -129,12 +121,14 @@ Check if client IP in allowedIPs
 ```
 
 ### IPv6
+
 ```
 ::1 (localhost)
 2001:0db8:85a3:0000:0000:8a2e:0370:7334
 ```
 
 ### Special Values
+
 - `127.0.0.1` - Localhost IPv4
 - `::1` - Localhost IPv6
 - `*` - Wildcard (allow all)
@@ -144,6 +138,7 @@ Check if client IP in allowedIPs
 ## ⚠️ Important Notes
 
 1. **Always Include Localhost**
+
    ```json
    "allowedIPs": [
      "127.0.0.1",  // For local development
@@ -172,6 +167,7 @@ Check if client IP in allowedIPs
 ## 🚀 Quick Commands
 
 ### Get Your Current IP (Command Line)
+
 ```bash
 # Windows
 curl ifconfig.me
@@ -181,6 +177,7 @@ curl ifconfig.me
 ```
 
 ### Test If You're Blocked
+
 - Try accessing `/admin/login`
 - If blocked, you'll see: `Access Denied` (403 error)
 
@@ -221,7 +218,8 @@ The configuration file is read on each request, so you can update it without res
 ### "Access Denied" Error
 
 **Problem**: Can't access admin panel  
-**Solution**: 
+**Solution**:
+
 1. Check your current IP: https://whatismyipaddress.com/
 2. Add it to `allowedIPs` array in `config/ip-whitelist.json`
 3. Or temporarily disable: `"enabled": false`
@@ -230,6 +228,7 @@ The configuration file is read on each request, so you can update it without res
 
 **Problem**: Changes not taking effect  
 **Solutions**:
+
 1. Check JSON syntax is valid
 2. Restart dev server: `npm run dev`
 3. Clear browser cache
@@ -239,6 +238,7 @@ The configuration file is read on each request, so you can update it without res
 
 **Problem**: Don't know what IP to add  
 **Solutions**:
+
 1. Visit: https://whatismyipaddress.com/
 2. Run: `curl ifconfig.me`
 3. Check router settings

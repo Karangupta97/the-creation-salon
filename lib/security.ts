@@ -19,20 +19,25 @@ export function isIpWhitelisted(clientIp: string): boolean {
     originalIp: clientIp,
     normalizedIp,
     hasWhitelist: !!whitelist,
-    whitelistValue: whitelist || 'none (allowing all)'
+    whitelistValue: whitelist || 'none (allowing all)',
   });
 
   // If no whitelist configured, allow all (with warning)
   if (!whitelist) {
     if (process.env.NODE_ENV === 'production') {
-      console.warn('⚠️ SECURITY WARNING: No IP whitelist configured in production - all IPs allowed. Set ADMIN_IP_WHITELIST to restrict access.');
+      console.warn(
+        '⚠️ SECURITY WARNING: No IP whitelist configured in production - all IPs allowed. Set ADMIN_IP_WHITELIST to restrict access.'
+      );
     } else {
       console.log('⚠️ No IP whitelist configured - allowing all IPs (development mode)');
     }
     return true;
   }
 
-  const allowedIps = whitelist.split(',').map((ip: string) => ip.trim()).filter(Boolean);
+  const allowedIps = whitelist
+    .split(',')
+    .map((ip: string) => ip.trim())
+    .filter(Boolean);
 
   console.log('📋 Allowed IPs:', allowedIps);
 
@@ -84,7 +89,7 @@ export function verifyCsrfToken(token: string, expectedToken: string): boolean {
   if (!token || !expectedToken) {
     console.log('🔒 CSRF Debug - Missing tokens:', {
       hasToken: !!token,
-      hasExpectedToken: !!expectedToken
+      hasExpectedToken: !!expectedToken,
     });
     return false;
   }
@@ -92,7 +97,7 @@ export function verifyCsrfToken(token: string, expectedToken: string): boolean {
   if (token.length !== expectedToken.length) {
     console.log('🔒 CSRF Debug - Length mismatch:', {
       tokenLength: token.length,
-      expectedLength: expectedToken.length
+      expectedLength: expectedToken.length,
     });
     return false;
   }
@@ -107,7 +112,7 @@ export function verifyCsrfToken(token: string, expectedToken: string): boolean {
   console.log('🔒 CSRF Debug - Comparison result:', {
     isValid,
     headerToken: token.substring(0, 10) + '...',
-    cookieToken: expectedToken.substring(0, 10) + '...'
+    cookieToken: expectedToken.substring(0, 10) + '...',
   });
 
   return isValid;

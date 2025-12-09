@@ -1,9 +1,7 @@
 {
   "ipWhitelist": {
     "enabled": true,
-    "allowedIPs": ["127.0.0.1", "103.50.23.37",
-      "::1"
-    ],
+    "allowedIPs": ["127.0.0.1", "103.50.23.37", "::1"],
     "description": "IP whitelist configuration for admin panel access. Set 'enabled' to true to activate IP filtering.",
     "notes": [
       "Add your IP addresses to the 'allowedIPs' array",

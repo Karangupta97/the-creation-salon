@@ -19,7 +19,7 @@ export function generateTotpSecret(): string {
  */
 export function generateTotpUri(email: string, secret: string): string {
   const issuer = process.env.TOTP_ISSUER || 'The Creation Beauty Salon';
-  
+
   return authenticator.keyuri(email, issuer, secret);
 }
 
@@ -54,11 +54,11 @@ export function generateTotpToken(secret: string): string {
  */
 export function generateBackupCodes(count: number = 8): string[] {
   const codes: string[] = [];
-  
+
   for (let i = 0; i < count; i++) {
     const code = randomBytes(4).toString('hex').toUpperCase();
     codes.push(`${code.slice(0, 4)}-${code.slice(4, 8)}`);
   }
-  
+
   return codes;
 }

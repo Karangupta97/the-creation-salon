@@ -71,7 +71,11 @@ export default function SessionsContent() {
   };
 
   const handleRevokeAllSessions = async () => {
-    if (!confirm('Are you sure you want to revoke all other sessions? You will remain logged in on this device.')) {
+    if (
+      !confirm(
+        'Are you sure you want to revoke all other sessions? You will remain logged in on this device.'
+      )
+    ) {
       return;
     }
 
@@ -156,7 +160,8 @@ export default function SessionsContent() {
           {sessions.length > 1 && (
             <button
               onClick={handleRevokeAllSessions}
-              className="w-full sm:w-auto px-3 sm:px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 active:bg-red-800 transition-all text-xs sm:text-sm active:scale-95">
+              className="w-full sm:w-auto px-3 sm:px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 active:bg-red-800 transition-all text-xs sm:text-sm active:scale-95"
+            >
               Revoke All Others
             </button>
           )}

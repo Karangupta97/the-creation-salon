@@ -18,7 +18,7 @@ export default async function ActivityPage() {
   let auditLogs;
   try {
     const payload = await verifyAccessToken(accessToken);
-    
+
     if (!payload.roles.includes('admin')) {
       redirect('/admin/login');
     }

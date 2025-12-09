@@ -44,9 +44,6 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ ok: true, message: '2FA disabled successfully' });
   } catch (error) {
     logger.error({ error }, 'Error disabling 2FA');
-    return NextResponse.json(
-      { ok: false, error: 'Failed to disable 2FA' },
-      { status: 500 }
-    );
+    return NextResponse.json({ ok: false, error: 'Failed to disable 2FA' }, { status: 500 });
   }
 }

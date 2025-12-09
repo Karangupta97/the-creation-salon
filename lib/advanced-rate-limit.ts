@@ -3,12 +3,13 @@ import { Redis } from '@upstash/redis';
 import logger from './logger';
 
 // Initialize Redis client
-const redis = process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
-  ? new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
-    })
-  : null;
+const redis =
+  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+    ? new Redis({
+        url: process.env.UPSTASH_REDIS_REST_URL,
+        token: process.env.UPSTASH_REDIS_REST_TOKEN,
+      })
+    : null;
 
 /**
  * Tiered rate limiters for different endpoint sensitivities
@@ -24,7 +25,7 @@ export const criticalRateLimiter = redis
     })
   : null;
 
-// Sensitive endpoints: 2FA setup, session management  
+// Sensitive endpoints: 2FA setup, session management
 export const sensitiveRateLimiter = redis
   ? new Ratelimit({
       redis,

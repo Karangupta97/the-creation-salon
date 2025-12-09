@@ -12,26 +12,26 @@ const LOCKOUT_DURATION_MS = 30 * 60 * 1000; // 30 minutes
 
 export type LoginResult =
   | {
-    success: false;
-    error: string;
-    lockoutDuration?: number;
-  }
+      success: false;
+      error: string;
+      lockoutDuration?: number;
+    }
   | {
-    success: true;
-    requires2FA?: boolean;
-    user: {
-      id: string;
-      name: string;
-      email: string;
-      roles: string[];
+      success: true;
+      requires2FA?: boolean;
+      user: {
+        id: string;
+        name: string;
+        email: string;
+        roles: string[];
+      };
+      tokens?: {
+        accessToken: string;
+        refreshToken: string;
+        refreshTokenJti: string;
+        expiresAt: Date;
+      };
     };
-    tokens?: {
-      accessToken: string;
-      refreshToken: string;
-      refreshTokenJti: string;
-      expiresAt: Date;
-    };
-  };
 
 export interface AuditLogData {
   email: string;
@@ -276,12 +276,7 @@ export async function authenticateAdmin(
 
       // Send suspicious login email after 3 failed attempts
       if (attempts >= 3) {
-        await sendSuspiciousLoginEmail(
-          admin.email,
-          ipAddress,
-          userAgent || 'Unknown',
-          new Date()
-        );
+        await sendSuspiciousLoginEmail(admin.email, ipAddress, userAgent || 'Unknown', new Date());
       }
 
       if (locked) {

@@ -54,9 +54,7 @@ export default function ForgotPasswordPage() {
             <>
               <div className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Forgot Password?</h2>
-                <p className="text-gray-600">
-                  No worries, we&apos;ll send you reset instructions.
-                </p>
+                <p className="text-gray-600">No worries, we&apos;ll send you reset instructions.</p>
               </div>
 
               {error && (
@@ -116,7 +114,8 @@ export default function ForgotPasswordPage() {
                 Didn&apos;t receive the email? Check your spam folder or{' '}
                 <button
                   onClick={() => setSuccess(false)}
-                  className="text-purple-600 hover:text-purple-700 font-medium">
+                  className="text-purple-600 hover:text-purple-700 font-medium"
+                >
                   try again
                 </button>
               </p>

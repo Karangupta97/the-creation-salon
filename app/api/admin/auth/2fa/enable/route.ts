@@ -15,10 +15,7 @@ export async function POST(request: NextRequest) {
     // Verify user is authenticated
     const accessToken = request.cookies.get('access_token')?.value;
     if (!accessToken) {
-      return NextResponse.json(
-        { ok: false, error: 'Unauthorized' },
-        { status: 401 }
-      );
+      return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
     }
 
     const payload = await verifyAccessToken(accessToken);
@@ -29,10 +26,7 @@ export async function POST(request: NextRequest) {
     const { token } = body;
 
     if (!token) {
-      return NextResponse.json(
-        { ok: false, error: 'Token required' },
-        { status: 400 }
-      );
+      return NextResponse.json({ ok: false, error: 'Token required' }, { status: 400 });
     }
 
     // Get admin user
@@ -52,10 +46,7 @@ export async function POST(request: NextRequest) {
 
     if (!isValid) {
       logger.warn({ adminId }, 'Invalid 2FA token during enable');
-      return NextResponse.json(
-        { ok: false, error: 'Invalid token' },
-        { status: 400 }
-      );
+      return NextResponse.json({ ok: false, error: 'Invalid token' }, { status: 400 });
     }
 
     // Enable 2FA
@@ -78,9 +69,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     logger.error({ error }, 'Error enabling 2FA');
-    return NextResponse.json(
-      { ok: false, error: 'Failed to enable 2FA' },
-      { status: 500 }
-    );
+    return NextResponse.json({ ok: false, error: 'Failed to enable 2FA' }, { status: 500 });
   }
 }

@@ -19,7 +19,7 @@ export default async function SettingsPage() {
   let admin;
   try {
     const payload = await verifyAccessToken(accessToken);
-    
+
     // Verify admin role
     if (!payload.roles.includes('admin')) {
       redirect('/admin/login');

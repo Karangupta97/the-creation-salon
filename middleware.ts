@@ -14,7 +14,7 @@ const authPaths = [
   '/api/admin/auth/logout',
   '/api/admin/auth/forgot-password',
   '/api/admin/auth/reset-password',
-  '/api/csrf'
+  '/api/csrf',
 ];
 
 export async function middleware(request: NextRequest) {
@@ -29,30 +29,27 @@ export async function middleware(request: NextRequest) {
   // Skip auth API paths and CSRF (these need to work before IP whitelist check)
   if (authPaths.some((path) => pathname.startsWith(path))) {
     const response = NextResponse.next();
-    
+
     // Add security headers
     const headers = getSecurityHeaders();
     Object.entries(headers).forEach(([key, value]) => {
       response.headers.set(key, value as string);
     });
-    
+
     return response;
   }
 
   // Check IP whitelist for admin routes (after allowing auth endpoints)
   if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
     const clientIp = getClientIp(request);
-    
+
     if (!isIpWhitelisted(clientIp)) {
       logger.warn({ ip: clientIp, pathname }, 'Blocked request from non-whitelisted IP');
-      
+
       if (pathname.startsWith('/api/')) {
-        return NextResponse.json(
-          { ok: false, error: 'Access denied' },
-          { status: 403 }
-        );
+        return NextResponse.json({ ok: false, error: 'Access denied' }, { status: 403 });
       }
-      
+
       return new NextResponse('Access Denied', { status: 403 });
     }
   }
@@ -60,7 +57,7 @@ export async function middleware(request: NextRequest) {
   // Handle login page - redirect to dashboard if already logged in
   if (publicPaths.some((path) => pathname.startsWith(path))) {
     const accessToken = request.cookies.get('access_token')?.value;
-    
+
     if (accessToken) {
       try {
         // Verify token is valid
@@ -71,15 +68,15 @@ export async function middleware(request: NextRequest) {
         // Token invalid, allow access to login page
       }
     }
-    
+
     const response = NextResponse.next();
-    
+
     // Add security headers
     const headers = getSecurityHeaders();
     Object.entries(headers).forEach(([key, value]) => {
       response.headers.set(key, value as string);
     });
-    
+
     return response;
   }
 

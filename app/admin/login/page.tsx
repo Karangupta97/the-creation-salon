@@ -9,7 +9,7 @@ export default function AdminLoginPage() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    rememberMe: false
+    rememberMe: false,
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -25,18 +25,18 @@ export default function AdminLoginPage() {
       try {
         // Check if user is already authenticated
         const authRes = await fetch('/api/admin/auth/verify', {
-          credentials: 'include'
+          credentials: 'include',
         });
-        
+
         if (authRes.ok) {
           // Already logged in, redirect to dashboard
           router.push('/admin/dashboard');
           return;
         }
-        
+
         // Not logged in, fetch CSRF token
         const csrfRes = await fetch('/api/csrf', {
-          credentials: 'include'
+          credentials: 'include',
         });
         const data = await csrfRes.json();
         if (data.ok) {
@@ -57,7 +57,7 @@ export default function AdminLoginPage() {
     try {
       const res = await fetch('/api/admin/auth/login', {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'X-CSRF-Token': csrfToken,
         },
@@ -92,7 +92,7 @@ export default function AdminLoginPage() {
 
   const handleVerify2FA = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!twoFactorCode || twoFactorCode.length !== 6) {
       setError('Please enter a valid 6-digit code');
       return;
@@ -104,7 +104,7 @@ export default function AdminLoginPage() {
     try {
       const res = await fetch('/api/admin/auth/2fa/verify', {
         method: 'POST',
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'X-CSRF-Token': csrfToken,
         },
@@ -150,8 +150,8 @@ export default function AdminLoginPage() {
               {requires2FA ? 'Two-Factor Authentication' : 'Welcome Back'}
             </h2>
             <p className="text-gray-600">
-              {requires2FA 
-                ? 'Enter the code from your authenticator app' 
+              {requires2FA
+                ? 'Enter the code from your authenticator app'
                 : 'Sign in to access your dashboard'}
             </p>
           </div>
@@ -213,7 +213,10 @@ export default function AdminLoginPage() {
                   />
                   <span className="ml-2 text-sm text-gray-600">Remember me</span>
                 </label>
-                <a href="/admin/forgot-password" className="text-sm text-purple-600 hover:text-purple-700 font-medium">
+                <a
+                  href="/admin/forgot-password"
+                  className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+                >
                   Forgot password?
                 </a>
               </div>
@@ -292,4 +295,3 @@ export default function AdminLoginPage() {
     </div>
   );
 }
-

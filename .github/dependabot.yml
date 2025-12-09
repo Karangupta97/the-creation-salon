@@ -1,49 +1,49 @@
 version: 2
 updates:
   # Enable version updates for npm
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
-      interval: "weekly"
-      day: "monday"
+      interval: 'weekly'
+      day: 'monday'
     open-pull-requests-limit: 10
     reviewers:
-      - "yourusername" # Replace with your GitHub username
+      - 'yourusername' # Replace with your GitHub username
     assignees:
-      - "yourusername" # Replace with your GitHub username
+      - 'yourusername' # Replace with your GitHub username
     commit-message:
-      prefix: "chore"
-      prefix-development: "chore"
-      include: "scope"
+      prefix: 'chore'
+      prefix-development: 'chore'
+      include: 'scope'
     labels:
-      - "dependencies"
-      - "security"
+      - 'dependencies'
+      - 'security'
     # Group updates for patch and minor versions
     groups:
       development-dependencies:
-        dependency-type: "development"
+        dependency-type: 'development'
         update-types:
-          - "minor"
-          - "patch"
+          - 'minor'
+          - 'patch'
       production-dependencies:
-        dependency-type: "production"
+        dependency-type: 'production'
         update-types:
-          - "patch"
+          - 'patch'
     # Allow security updates at any time
     allow:
-      - dependency-type: "all"
+      - dependency-type: 'all'
     # Ignore specific packages if needed
     ignore:
-      - dependency-name: "next"
-        update-types: ["version-update:semver-major"]
+      - dependency-name: 'next'
+        update-types: ['version-update:semver-major']
 
   # GitHub Actions security updates
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "weekly"
+      interval: 'weekly'
     commit-message:
-      prefix: "ci"
+      prefix: 'ci'
     labels:
-      - "github-actions"
-      - "security"
+      - 'github-actions'
+      - 'security'

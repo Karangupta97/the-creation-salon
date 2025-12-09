@@ -16,7 +16,7 @@ export default async function SessionsPage() {
 
   try {
     const payload = await verifyAccessToken(accessToken);
-    
+
     if (!payload.roles.includes('admin')) {
       redirect('/admin/login');
     }

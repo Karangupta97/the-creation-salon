@@ -65,25 +65,25 @@ Open the `.env` file and configure the following variables:
 
 These **MUST** be set for the application to work:
 
-| Variable | Description | How to Get |
-|----------|-------------|------------|
-| `DATABASE_URL` | PostgreSQL connection string | [See Database Setup](#database-setup) |
-| `JWT_SECRET` | Secret key for JWT tokens | [Generate](#generating-jwt-secret) |
-| `UPSTASH_REDIS_REST_URL` | Redis URL for rate limiting | [Get from Upstash](#6-redis-upstash) |
-| `UPSTASH_REDIS_REST_TOKEN` | Redis authentication token | [Get from Upstash](#6-redis-upstash) |
+| Variable                   | Description                  | How to Get                            |
+| -------------------------- | ---------------------------- | ------------------------------------- |
+| `DATABASE_URL`             | PostgreSQL connection string | [See Database Setup](#database-setup) |
+| `JWT_SECRET`               | Secret key for JWT tokens    | [Generate](#generating-jwt-secret)    |
+| `UPSTASH_REDIS_REST_URL`   | Redis URL for rate limiting  | [Get from Upstash](#6-redis-upstash)  |
+| `UPSTASH_REDIS_REST_TOKEN` | Redis authentication token   | [Get from Upstash](#6-redis-upstash)  |
 
 ### ⚙️ OPTIONAL Variables
 
 These are optional but recommended for production:
 
-| Variable | Description | Default | How to Get |
-|----------|-------------|---------|------------|
-| `RESEND_API_KEY` | Email service API key | None (console logging) | [Get from Resend](#7-email-service-resend) |
-| `EMAIL_FROM` | Sender email address | `noreply@yourdomain.com` | Your verified domain in Resend |
-| `NEXT_PUBLIC_SENTRY_DSN` | Error tracking DSN | None (disabled) | [Get from Sentry](#8-error-tracking-sentry) |
-| `NEXT_PUBLIC_APP_URL` | Your application URL | `http://localhost:3000` | Your deployed URL |
-| `ADMIN_IP_WHITELIST` | Allowed IP addresses | All IPs allowed | Comma-separated IPs |
-| `TOTP_APP_NAME` | App name in 2FA apps | `The Creation Salon` | Your app name |
+| Variable                 | Description           | Default                  | How to Get                                  |
+| ------------------------ | --------------------- | ------------------------ | ------------------------------------------- |
+| `RESEND_API_KEY`         | Email service API key | None (console logging)   | [Get from Resend](#7-email-service-resend)  |
+| `EMAIL_FROM`             | Sender email address  | `noreply@yourdomain.com` | Your verified domain in Resend              |
+| `NEXT_PUBLIC_SENTRY_DSN` | Error tracking DSN    | None (disabled)          | [Get from Sentry](#8-error-tracking-sentry) |
+| `NEXT_PUBLIC_APP_URL`    | Your application URL  | `http://localhost:3000`  | Your deployed URL                           |
+| `ADMIN_IP_WHITELIST`     | Allowed IP addresses  | All IPs allowed          | Comma-separated IPs                         |
+| `TOTP_APP_NAME`          | App name in 2FA apps  | `The Creation Salon`     | Your app name                               |
 
 ---
 
@@ -126,6 +126,7 @@ These are optional but recommended for production:
 **Required** - Generate a strong 32-character secret:
 
 **Windows (Command Prompt):**
+
 ```cmd
 # Install OpenSSL from https://slproweb.com/products/Win32OpenSSL.html
 # Or use PowerShell:
@@ -133,16 +134,19 @@ powershell -Command "[Convert]::ToBase64String((1..32 | ForEach-Object {Get-Rand
 ```
 
 **Windows (PowerShell):**
+
 ```powershell
 [Convert]::ToBase64String((1..32 | ForEach-Object {Get-Random -Maximum 256}))
 ```
 
 **Mac/Linux:**
+
 ```bash
 openssl rand -base64 32
 ```
 
 Copy the output and add to `.env`:
+
 ```env
 JWT_SECRET="your-generated-secret-here"
 ```
@@ -228,6 +232,7 @@ npm run seed
 ```
 
 This creates an admin account with:
+
 - **Email:** `admin@example.com`
 - **Password:** `AdminPassword123!`
 
@@ -244,6 +249,7 @@ The application will start at [http://localhost:3000](http://localhost:3000)
 ### 5. Access Admin Panel
 
 Open your browser and go to:
+
 ```
 http://localhost:3000/admin/login
 ```
@@ -258,6 +264,7 @@ Login with the default credentials above.
 **Password:** `AdminPassword123!`
 
 ⚠️ **IMPORTANT**: Change this password immediately:
+
 1. Login with default credentials
 2. Go to **Dashboard** → **Settings**
 3. Update your password
@@ -272,6 +279,7 @@ Login with the default credentials above.
 **Error:** `Can't reach database server`
 
 **Solutions:**
+
 1. Check if your database is **active** (Neon pauses after inactivity)
 2. Verify `DATABASE_URL` in `.env` is correct
 3. Ensure `sslmode=require` is at the end of the connection string
@@ -282,6 +290,7 @@ Login with the default credentials above.
 **Error:** `Rate limiting failed`
 
 **Solutions:**
+
 1. Verify `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` are correct
 2. The app will fall back to in-memory rate limiting if Redis is unavailable
 3. For production, ensure Upstash Redis is properly configured
@@ -291,6 +300,7 @@ Login with the default credentials above.
 **Error:** `🚨 SECURITY ERROR: JWT_SECRET must be set in production`
 
 **Solution:**
+
 1. Generate a secret: `openssl rand -base64 32`
 2. Add to `.env`: `JWT_SECRET="your-generated-secret"`
 3. Restart the application
@@ -300,6 +310,7 @@ Login with the default credentials above.
 **Error:** `Port 3000 is already in use`
 
 **Solutions:**
+
 1. Kill the process using port 3000
 2. Or change the port: `npm run dev -- -p 3001`
 
@@ -308,6 +319,7 @@ Login with the default credentials above.
 **Error:** `Migration failed to apply`
 
 **Solutions:**
+
 ```bash
 # Reset and try again
 npm run prisma:migrate reset
@@ -354,17 +366,17 @@ Before deploying to production:
 
 ### Required Services (Free Tiers Available)
 
-| Service | Purpose | Sign Up |
-|---------|---------|---------|
-| **Neon** | PostgreSQL Database | [neon.tech](https://neon.tech) |
+| Service     | Purpose               | Sign Up                            |
+| ----------- | --------------------- | ---------------------------------- |
+| **Neon**    | PostgreSQL Database   | [neon.tech](https://neon.tech)     |
 | **Upstash** | Redis (Rate Limiting) | [upstash.com](https://upstash.com) |
 
 ### Optional Services (Free Tiers Available)
 
-| Service | Purpose | Sign Up |
-|---------|---------|---------|
-| **Resend** | Email Sending | [resend.com](https://resend.com) |
-| **Sentry** | Error Tracking | [sentry.io](https://sentry.io) |
+| Service    | Purpose        | Sign Up                          |
+| ---------- | -------------- | -------------------------------- |
+| **Resend** | Email Sending  | [resend.com](https://resend.com) |
+| **Sentry** | Error Tracking | [sentry.io](https://sentry.io)   |
 
 ---
 

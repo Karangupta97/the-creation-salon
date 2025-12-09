@@ -87,9 +87,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     logger.error({ error }, 'Error resetting password');
-    return NextResponse.json(
-      { ok: false, error: 'Failed to reset password' },
-      { status: 500 }
-    );
+    return NextResponse.json({ ok: false, error: 'Failed to reset password' }, { status: 500 });
   }
 }

@@ -33,7 +33,7 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
   const handle2FASetup = async () => {
     setIsLoading(true);
     setError('');
-    
+
     try {
       const res = await fetch('/api/admin/auth/2fa/setup', {
         method: 'POST',
@@ -92,7 +92,11 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
   };
 
   const handleDisable2FA = async () => {
-    if (!confirm('Are you sure you want to disable two-factor authentication? This will make your account less secure.')) {
+    if (
+      !confirm(
+        'Are you sure you want to disable two-factor authentication? This will make your account less secure.'
+      )
+    ) {
       return;
     }
 
@@ -148,7 +152,9 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
       {/* Header */}
       <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Settings</h1>
-        <p className="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">Manage your account settings and preferences</p>
+        <p className="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">
+          Manage your account settings and preferences
+        </p>
       </div>
 
       {/* Alerts */}
@@ -199,7 +205,9 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
                       <Smartphone className="w-5 h-5 sm:w-6 sm:h-6 text-purple-600" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-base sm:text-lg font-semibold text-gray-900">Two-Factor Authentication</h3>
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900">
+                        Two-Factor Authentication
+                      </h3>
                       <p className="text-xs sm:text-sm text-gray-600 mt-1">
                         Add an extra layer of security to your account
                       </p>
@@ -228,7 +236,8 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
                     <button
                       onClick={handleDisable2FA}
                       disabled={isLoading}
-                      className="w-full sm:w-auto px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 active:bg-red-800 transition-all disabled:opacity-50 text-sm active:scale-95">
+                      className="w-full sm:w-auto px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 active:bg-red-800 transition-all disabled:opacity-50 text-sm active:scale-95"
+                    >
                       Disable 2FA
                     </button>
                   )}
@@ -240,13 +249,21 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                       {/* QR Code */}
                       <div>
-                        <h4 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 sm:mb-3">1. Scan QR Code</h4>
+                        <h4 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 sm:mb-3">
+                          1. Scan QR Code
+                        </h4>
                         <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">
                           Use Google Authenticator, Authy, or any TOTP app to scan this code:
                         </p>
                         {qrCode && (
                           <div className="bg-white p-3 sm:p-4 rounded-lg border border-gray-200 inline-block">
-                            <Image src={qrCode} alt="2FA QR Code" width={160} height={160} className="sm:w-[200px] sm:h-[200px]" />
+                            <Image
+                              src={qrCode}
+                              alt="2FA QR Code"
+                              width={160}
+                              height={160}
+                              className="sm:w-[200px] sm:h-[200px]"
+                            />
                           </div>
                         )}
                         <div className="mt-3 sm:mt-4">
@@ -270,7 +287,9 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
 
                       {/* Verification */}
                       <div>
-                        <h4 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 sm:mb-3">2. Verify Code</h4>
+                        <h4 className="text-sm sm:text-base font-semibold text-gray-900 mb-2 sm:mb-3">
+                          2. Verify Code
+                        </h4>
                         <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">
                           Enter the 6-digit code from your authenticator app:
                         </p>
@@ -286,7 +305,8 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
                         <button
                           onClick={handleEnable2FA}
                           disabled={isLoading || verifyCode.length !== 6}
-                          className="w-full mt-3 sm:mt-4 px-4 py-2.5 sm:py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 active:bg-purple-800 transition-all disabled:opacity-50 text-sm sm:text-base active:scale-95">
+                          className="w-full mt-3 sm:mt-4 px-4 py-2.5 sm:py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 active:bg-purple-800 transition-all disabled:opacity-50 text-sm sm:text-base active:scale-95"
+                        >
                           {isLoading ? 'Verifying...' : 'Verify & Enable'}
                         </button>
                       </div>
@@ -297,14 +317,17 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
                       <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-200">
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-3 sm:mb-4">
                           <div>
-                            <h4 className="text-sm sm:text-base font-semibold text-gray-900">3. Save Backup Codes</h4>
+                            <h4 className="text-sm sm:text-base font-semibold text-gray-900">
+                              3. Save Backup Codes
+                            </h4>
                             <p className="text-xs sm:text-sm text-gray-600 mt-1">
                               Keep these codes safe. Each can only be used once.
                             </p>
                           </div>
                           <button
                             onClick={downloadBackupCodes}
-                            className="flex items-center justify-center sm:justify-start gap-2 px-3 sm:px-4 py-2 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 rounded-lg text-xs sm:text-sm font-medium transition-all active:scale-95">
+                            className="flex items-center justify-center sm:justify-start gap-2 px-3 sm:px-4 py-2 bg-gray-100 hover:bg-gray-200 active:bg-gray-300 rounded-lg text-xs sm:text-sm font-medium transition-all active:scale-95"
+                          >
                             <Download className="w-4 h-4" />
                             Download
                           </button>
@@ -313,7 +336,8 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
                           {backupCodes.map((code, index) => (
                             <div
                               key={index}
-                              className="flex items-center justify-between bg-gray-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg border border-gray-200">
+                              className="flex items-center justify-between bg-gray-50 px-3 sm:px-4 py-2 sm:py-3 rounded-lg border border-gray-200"
+                            >
                               <code className="text-xs sm:text-sm font-mono">{code}</code>
                               <button
                                 onClick={() => copyToClipboard(code, index)}
@@ -343,7 +367,8 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
                   <div className="flex-1 min-w-0">
                     <h3 className="text-base sm:text-lg font-semibold text-gray-900">Password</h3>
                     <p className="text-xs sm:text-sm text-gray-600 mt-1">
-                      Last changed {admin.createdAt ? new Date(admin.createdAt).toLocaleDateString() : 'never'}
+                      Last changed{' '}
+                      {admin.createdAt ? new Date(admin.createdAt).toLocaleDateString() : 'never'}
                     </p>
                     <button className="mt-3 sm:mt-4 px-4 py-2 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 active:bg-indigo-800 transition-all text-sm active:scale-95">
                       Change Password
@@ -359,13 +384,16 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
                     <Activity className="w-5 h-5 sm:w-6 sm:h-6 text-violet-600" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-base sm:text-lg font-semibold text-gray-900">Active Sessions</h3>
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900">
+                      Active Sessions
+                    </h3>
                     <p className="text-xs sm:text-sm text-gray-600 mt-1">
                       Manage devices and browsers where you&apos;re logged in
                     </p>
                     <a
                       href="/admin/dashboard/sessions"
-                      className="inline-block mt-3 sm:mt-4 px-4 py-2 bg-violet-600 text-white rounded-lg font-medium hover:bg-violet-700 active:bg-violet-800 transition-all text-sm active:scale-95">
+                      className="inline-block mt-3 sm:mt-4 px-4 py-2 bg-violet-600 text-white rounded-lg font-medium hover:bg-violet-700 active:bg-violet-800 transition-all text-sm active:scale-95"
+                    >
                       View Sessions
                     </a>
                   </div>
@@ -378,7 +406,9 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
           {activeTab === 'profile' && (
             <div className="space-y-4 sm:space-y-6">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Name</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                  Name
+                </label>
                 <input
                   type="text"
                   defaultValue={admin.name}
@@ -386,7 +416,9 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Email</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                  Email
+                </label>
                 <input
                   type="email"
                   defaultValue={admin.email}
@@ -394,7 +426,9 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Account Created</label>
+                <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                  Account Created
+                </label>
                 <input
                   type="text"
                   value={new Date(admin.createdAt).toLocaleDateString()}
@@ -411,16 +445,21 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
           {/* Activity Tab */}
           {activeTab === 'activity' && (
             <div>
-              <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">Recent account activity and login history</p>
+              <p className="text-xs sm:text-sm text-gray-600 mb-3 sm:mb-4">
+                Recent account activity and login history
+              </p>
               <div className="space-y-3">
                 <div className="p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-200">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
                     <div className="flex-1 min-w-0">
                       <p className="text-sm sm:text-base font-medium text-gray-900">Login</p>
-                      <p className="text-xs sm:text-sm text-gray-600 mt-1 truncate" title={admin.lastLoginAt ? new Date(admin.lastLoginAt).toLocaleString() : 'Never'}>
-                        {admin.lastLoginAt 
-                          ? new Date(admin.lastLoginAt).toLocaleString()
-                          : 'Never'}
+                      <p
+                        className="text-xs sm:text-sm text-gray-600 mt-1 truncate"
+                        title={
+                          admin.lastLoginAt ? new Date(admin.lastLoginAt).toLocaleString() : 'Never'
+                        }
+                      >
+                        {admin.lastLoginAt ? new Date(admin.lastLoginAt).toLocaleString() : 'Never'}
                       </p>
                     </div>
                     <span className="text-xs bg-green-100 text-green-700 px-2.5 sm:px-3 py-1 rounded-full whitespace-nowrap flex-shrink-0">

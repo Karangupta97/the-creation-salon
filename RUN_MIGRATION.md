@@ -3,6 +3,7 @@
 ## Step 1: Enable Script Execution (One-time setup)
 
 Open PowerShell as Administrator and run:
+
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
@@ -48,6 +49,7 @@ If you prefer not to change execution policy, use Command Prompt (cmd.exe):
 ## After Migration
 
 Test all new features:
+
 1. Visit `/admin/dashboard/settings` - Enable 2FA
 2. Visit `/admin/dashboard/sessions` - View active sessions
 3. Visit `/admin/dashboard/activity` - See activity logs

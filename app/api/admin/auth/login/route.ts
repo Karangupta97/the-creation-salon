@@ -5,15 +5,17 @@ import { getClientIp, getUserAgent } from '@/lib/request-utils';
 import { verifyCsrfToken } from '@/lib/security';
 import logger from '@/lib/logger';
 
-
 export async function POST(request: NextRequest) {
   try {
     // Verify CSRF token
     const csrfTokenFromHeader = request.headers.get('x-csrf-token');
     const csrfTokenFromCookie = request.cookies.get('csrf_token')?.value;
 
-    if (!csrfTokenFromHeader || !csrfTokenFromCookie || 
-        !verifyCsrfToken(csrfTokenFromHeader, csrfTokenFromCookie)) {
+    if (
+      !csrfTokenFromHeader ||
+      !csrfTokenFromCookie ||
+      !verifyCsrfToken(csrfTokenFromHeader, csrfTokenFromCookie)
+    ) {
       logger.warn('CSRF token validation failed');
       return NextResponse.json(
         {
@@ -86,7 +88,7 @@ export async function POST(request: NextRequest) {
     // Set access token cookie (HttpOnly, Secure, SameSite=Strict)
     response.cookies.set('access_token', result.tokens!.accessToken, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
       path: '/',
       maxAge: 60 * 60, // 60 minutes

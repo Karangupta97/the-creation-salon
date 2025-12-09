@@ -16,7 +16,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         setIsSidebarOpen(false);
       }
     };
-    
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -168,18 +168,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2 sm:gap-2.5 md:gap-3 flex-1 min-w-0">
                 <div className="w-10 h-10 sm:w-11 sm:h-11 md:w-10 md:h-10 bg-gradient-to-br from-purple-600 to-purple-800 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0">
-                <svg
-                  className="w-5 h-5 sm:w-6 sm:h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                  />
+                  <svg
+                    className="w-5 h-5 sm:w-6 sm:h-6 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                    />
                   </svg>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -195,8 +195,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 className="md:hidden p-2 hover:bg-gray-100 active:bg-gray-200 rounded-lg transition-all active:scale-95 flex-shrink-0"
                 aria-label="Close sidebar"
               >
-                <svg className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
@@ -232,7 +242,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 A
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm sm:text-base font-semibold text-gray-900 truncate">Admin User</p>
+                <p className="text-sm sm:text-base font-semibold text-gray-900 truncate">
+                  Admin User
+                </p>
                 <p className="text-[10px] sm:text-xs text-gray-500 truncate">admin@example.com</p>
               </div>
             </div>
@@ -240,7 +252,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               onClick={handleLogout}
               className="w-full flex items-center justify-center gap-2 px-3 py-2.5 sm:py-3 rounded-lg sm:rounded-xl bg-red-50 hover:bg-red-100 active:bg-red-200 text-red-600 font-semibold transition-all duration-200 active:scale-[0.98] text-sm sm:text-base shadow-sm hover:shadow"
             >
-              <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg
+                className="w-4 h-4 sm:w-5 sm:h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -261,8 +278,18 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           aria-label="Toggle menu"
           className="md:hidden fixed top-3 left-3 sm:top-4 sm:left-4 z-50 p-2.5 sm:p-3 rounded-xl bg-white/90 backdrop-blur-sm shadow-lg hover:shadow-xl active:shadow-md transition-all duration-200 active:scale-95 border border-gray-200"
         >
-          <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          <svg
+            className="w-6 h-6 text-gray-700"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
           </svg>
         </button>
       )}
@@ -274,12 +301,19 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <div className="px-3 py-3 sm:px-4 sm:py-3 md:px-6 md:py-4">
             <div className="flex items-center justify-between gap-2">
               <div className="flex-1 min-w-0 ml-11 sm:ml-12 md:ml-0">
-                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 truncate">Dashboard</h2>
-                <p className="text-xs sm:text-sm text-gray-500 mt-0.5 hidden sm:block">Welcome back! Here&apos;s what&apos;s happening today.</p>
+                <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 truncate">
+                  Dashboard
+                </h2>
+                <p className="text-xs sm:text-sm text-gray-500 mt-0.5 hidden sm:block">
+                  Welcome back! Here&apos;s what&apos;s happening today.
+                </p>
               </div>
               <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 flex-shrink-0">
                 {/* Notifications */}
-                <button aria-label="Notifications" className="relative p-2 sm:p-2.5 rounded-lg md:rounded-xl hover:bg-purple-50 active:bg-purple-100 transition-all active:scale-95">
+                <button
+                  aria-label="Notifications"
+                  className="relative p-2 sm:p-2.5 rounded-lg md:rounded-xl hover:bg-purple-50 active:bg-purple-100 transition-all active:scale-95"
+                >
                   <svg
                     className="w-5 h-5 md:w-6 md:h-6 text-gray-600"
                     fill="none"
@@ -298,14 +332,27 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 {/* Quick Actions */}
                 <button className="hidden sm:flex px-3 sm:px-4 py-2 sm:py-2.5 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg md:rounded-xl font-semibold shadow-lg shadow-purple-200 hover:shadow-xl hover:from-purple-700 hover:to-purple-800 transition-all active:scale-95 text-xs sm:text-sm md:text-base items-center gap-1.5">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4v16m8-8H4"
+                    />
                   </svg>
                   <span className="hidden lg:inline">New </span>Appointment
                 </button>
                 {/* Mobile FAB for new appointment */}
-                <button aria-label="New appointment" className="sm:hidden fixed bottom-5 right-5 z-40 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-full shadow-2xl hover:shadow-3xl active:shadow-xl transition-all duration-200 active:scale-95 flex items-center justify-center border-4 border-white">
+                <button
+                  aria-label="New appointment"
+                  className="sm:hidden fixed bottom-5 right-5 z-40 w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-full shadow-2xl hover:shadow-3xl active:shadow-xl transition-all duration-200 active:scale-95 flex items-center justify-center border-4 border-white"
+                >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4v16m8-8H4"
+                    />
                   </svg>
                 </button>
               </div>
