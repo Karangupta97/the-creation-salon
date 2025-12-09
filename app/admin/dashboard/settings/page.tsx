@@ -16,6 +16,7 @@ export default async function SettingsPage() {
     redirect('/admin/login');
   }
 
+  let admin;
   try {
     const payload = await verifyAccessToken(accessToken);
     
@@ -25,7 +26,7 @@ export default async function SettingsPage() {
     }
 
     // Fetch admin data including 2FA status
-    const admin = await prisma.admin.findUnique({
+    admin = await prisma.admin.findUnique({
       where: { id: payload.sub },
       select: {
         id: true,
@@ -40,9 +41,9 @@ export default async function SettingsPage() {
     if (!admin) {
       redirect('/admin/login');
     }
-
-    return <SettingsContent admin={admin} />;
   } catch {
     redirect('/admin/login');
   }
+
+  return <SettingsContent admin={admin} />;
 }

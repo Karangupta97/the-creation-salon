@@ -20,9 +20,9 @@ export default async function SessionsPage() {
     if (!payload.roles.includes('admin')) {
       redirect('/admin/login');
     }
-
-    return <SessionsContent />;
   } catch {
     redirect('/admin/login');
   }
+
+  return <SessionsContent />;
 }

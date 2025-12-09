@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { generateCsrfToken } from '@/lib/security';
 
 /**
  * GET /api/csrf
  * Generate and return a CSRF token
  */
-export async function GET(request: NextRequest) {
+export async function GET() {
   const token = generateCsrfToken();
 
   const response = NextResponse.json({
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
   });
 
   // Set CSRF token in a cookie
-  response.cookies.set('csrf_token', token, {
+  response.cookies.set('csrf-token', token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',

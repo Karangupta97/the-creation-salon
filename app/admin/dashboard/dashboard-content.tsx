@@ -102,7 +102,7 @@ function DashboardContent({ user }: DashboardContentProps) {
       {/* Welcome Message */}
       <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl sm:rounded-2xl p-4 sm:p-5 md:p-6 text-white shadow-lg hover:shadow-xl transition-shadow duration-300">
         <h2 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold mb-1 sm:mb-1.5">Welcome back, {user.name}! 👋</h2>
-        <p className="text-xs sm:text-sm md:text-base text-purple-100 leading-relaxed">Here's what's happening with your salon today.</p>
+        <p className="text-xs sm:text-sm md:text-base text-purple-100 leading-relaxed">Here&apos;s what&apos;s happening with your salon today.</p>
       </div>
 
       {/* Stats Grid - Mobile First Design */}
@@ -136,7 +136,7 @@ function DashboardContent({ user }: DashboardContentProps) {
         {/* Today's Schedule */}
         <div className="xl:col-span-2 bg-white rounded-xl sm:rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-5 md:p-6 hover:shadow-md transition-shadow duration-300">
           <div className="flex items-center justify-between mb-4 sm:mb-5 md:mb-6">
-            <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900">Today's Schedule</h2>
+            <h2 className="text-base sm:text-lg md:text-xl font-semibold text-gray-900">Today&apos;s Schedule</h2>
             <button className="text-xs sm:text-sm text-purple-600 hover:text-purple-700 active:text-purple-800 font-semibold hover:underline transition-colors duration-200 min-h-[44px] sm:min-h-0 flex items-center">
               View All
             </button>

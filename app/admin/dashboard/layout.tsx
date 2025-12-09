@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 
@@ -275,7 +275,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <div className="flex items-center justify-between gap-2">
               <div className="flex-1 min-w-0 ml-11 sm:ml-12 md:ml-0">
                 <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 truncate">Dashboard</h2>
-                <p className="text-xs sm:text-sm text-gray-500 mt-0.5 hidden sm:block">Welcome back! Here's what's happening today.</p>
+                <p className="text-xs sm:text-sm text-gray-500 mt-0.5 hidden sm:block">Welcome back! Here&apos;s what&apos;s happening today.</p>
               </div>
               <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 flex-shrink-0">
                 {/* Notifications */}

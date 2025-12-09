@@ -15,6 +15,7 @@ export default async function ActivityPage() {
     redirect('/admin/login');
   }
 
+  let auditLogs;
   try {
     const payload = await verifyAccessToken(accessToken);
     
@@ -23,14 +24,14 @@ export default async function ActivityPage() {
     }
 
     // Fetch recent audit logs
-    const auditLogs = await prisma.authAuditLog.findMany({
+    auditLogs = await prisma.authAuditLog.findMany({
       where: { adminId: payload.sub },
       orderBy: { createdAt: 'desc' },
       take: 50,
     });
-
-    return <ActivityContent logs={auditLogs} />;
   } catch {
     redirect('/admin/login');
   }
+
+  return <ActivityContent logs={auditLogs} />;
 }

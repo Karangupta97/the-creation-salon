@@ -361,7 +361,7 @@ export default function SettingsContent({ admin }: SettingsContentProps) {
                   <div className="flex-1 min-w-0">
                     <h3 className="text-base sm:text-lg font-semibold text-gray-900">Active Sessions</h3>
                     <p className="text-xs sm:text-sm text-gray-600 mt-1">
-                      Manage devices and browsers where you're logged in
+                      Manage devices and browsers where you&apos;re logged in
                     </p>
                     <a
                       href="/admin/dashboard/sessions"

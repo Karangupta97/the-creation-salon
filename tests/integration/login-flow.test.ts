@@ -1,7 +1,7 @@
 // Load environment variables first
 import 'dotenv/config';
 
-import { describe, it, expect, beforeAll, afterAll, vi } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { hash } from 'bcrypt';
 import prisma from '@/lib/prisma';
 

@@ -126,7 +126,7 @@ export default function SessionsContent() {
       <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Active Sessions</h1>
         <p className="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">
-          Manage devices and browsers where you're currently logged in
+          Manage devices and browsers where you&apos;re currently logged in
         </p>
       </div>
 
@@ -225,7 +225,7 @@ export default function SessionsContent() {
           <div className="text-xs sm:text-sm text-blue-800">
             <p className="font-medium mb-1">Security Tip</p>
             <p>
-              If you see any sessions you don't recognize, revoke them immediately and change
+              If you see any sessions you don&apos;t recognize, revoke them immediately and change
               your password.
             </p>
           </div>

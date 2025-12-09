@@ -15,17 +15,18 @@ export default async function DashboardPage() {
     redirect('/admin/login');
   }
 
+  let payload;
   try {
-    const payload = await verifyAccessToken(accessToken);
+    payload = await verifyAccessToken(accessToken);
     
     // Verify admin role
     if (!payload.roles.includes('admin')) {
       redirect('/admin/login');
     }
-
-    // Pass user data to client component
-    return <DashboardContent user={payload} />;
   } catch {
     redirect('/admin/login');
   }
+
+  // Pass user data to client component
+  return <DashboardContent user={payload} />;
 }
