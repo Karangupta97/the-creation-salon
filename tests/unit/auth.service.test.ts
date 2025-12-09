@@ -16,6 +16,11 @@ vi.mock('@/lib/prisma', () => ({
       findUnique: vi.fn(),
       update: vi.fn(),
     },
+    session: {
+      create: vi.fn(),
+      findMany: vi.fn(),
+      update: vi.fn(),
+    },
     authAuditLog: {
       create: vi.fn(),
     },
@@ -92,6 +97,18 @@ describe('Auth Service', () => {
         adminId: mockAdmin.id,
         expiresAt: new Date(),
         isRevoked: false,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      });
+      vi.mocked(prisma.session.create).mockResolvedValue({
+        id: 'session-id',
+        adminId: mockAdmin.id,
+        token: 'session-token',
+        ipAddress: '127.0.0.1',
+        userAgent: 'Test Browser',
+        deviceInfo: null,
+        isRevoked: false,
+        expiresAt: new Date(),
         createdAt: new Date(),
         updatedAt: new Date(),
       });
