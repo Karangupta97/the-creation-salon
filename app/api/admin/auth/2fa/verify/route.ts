@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
   try {
     // Verify CSRF token
     const csrfTokenFromHeader = request.headers.get('x-csrf-token');
-    const csrfTokenFromCookie = request.cookies.get('csrf_token')?.value;
+    const csrfTokenFromCookie = request.cookies.get('csrf-token')?.value;
 
     if (!csrfTokenFromHeader || !csrfTokenFromCookie || 
         !verifyCsrfToken(csrfTokenFromHeader, csrfTokenFromCookie)) {
