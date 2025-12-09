@@ -120,10 +120,6 @@ export default function ForgotPasswordPage() {
                   try again
                 </button>
               </p>
-                >
-                  try again
-                </button>
-              </p>
               <Link
                 href="/admin/login"
                 className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 font-medium"
